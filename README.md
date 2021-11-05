@@ -30,6 +30,13 @@ github: https://github.com/shinkihyeon
 
 // **TODO**: csic 데이터셋에 관한 내용 설명
 
+csic 데이터 셋은 스페인 연구전담 공공기관인 csic에서 발표한 http request 로그 데이터셋이다. 
+총 61,065건의 로그는 36,000 건의 정상 데이터와 25,065건의 비정상 데이터로 구성되어 있다. 비정상 데이터로는 
+    1) static attacks - 정상적이지 않은 경로로 들어오는 공격
+    2) dynamic attacks - request argument에 대한 공격
+    3) Unintentional illegal requrests - 공격의도는 없지만 비정상적인 로그
+세 종류로 구분되어 있다.
+
 ---
 
 <br/>
@@ -66,6 +73,12 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
 1. 회의를 통해 정상 데이터와 비정상 데이터의 차이를 도출하였다.
 
    // **TODO**: 도출한 내용 설명
+
+   직접 분석을 통해 얻은 바로 데이터 상에선 url, Host, Cookie, Content-Length 만의 차이가 발견되었고 이 중 유의미한 차이로는
+    1) url 및 body부분에서 쓰레기값들이 발견되거나 idA pwdA등 비정상적 내용이 포함되있는 경우, 
+    2) url의 host와 로그상의 Host의 값이 다른경우
+   위 두가지의 차이가 있었다.
+
 
 2. 도출한 결과를 바탕으로 훈련할 데이터에서 가져올 내용을 수정하였다.
 
@@ -172,6 +185,10 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
 
       // **TODO: 파싱 내용 설명**
 
+      readlines()로 전체파일을 받아온 후 startswith() 함수를 활용하여 Host로 시작하는 부분을 추가하고 
+      데이터셋에서 post put은 일관적으로 content-length 부분의 두줄 뒤에 body가 나오기에 index를 활용하여 
+      body부분을 함께 추가해 주었다.
+
       위의 데이터를 `random Forest` 알고리즘을 통해 실행한 결과는 다음과 같다.
 
       - Accuracy: 0.7802751166789487
@@ -186,6 +203,9 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
    3. `url` 파싱
 
       // **TODO**: 판단한 이유 설명
+
+      HOST로 인한 비정상로그는 수가 적어서 정상데이터와 비정상데이터에 같은 내용의 단어가 많이 들어가서 정확도가 떨어질 것으로 예상했다. 
+      때문에 url만을 parsing 해서 실험해보았다.
 
       ```python
       def parsing(path):
@@ -210,6 +230,9 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
       ```
 
       // **TODO: 파싱 내용 설명**
+
+      데이터셋에서 post put은 일관적으로 content-length 부분의 두줄 뒤에 body가 나오기에 index를 활용하여 
+      body부분을 함께 추가해 주었다.
 
       위의 데이터를 `random Forest` 알고리즘을 통해 실행한 결과는 다음과 같다.
 
@@ -264,6 +287,7 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
    | F1 score | 0.9706473663047849   | 0.9582644226092032 | 0.9597262952101663 | 0.9933827956769 |
 
    // **TODO** : Linear SVM이 가장 높은 이유 설명
+    ** 회의 필요 **
 
 ---
 
