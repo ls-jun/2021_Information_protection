@@ -251,22 +251,22 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
        lgs = LogisticRegression(solver='lbfgs', max_iter=1000)
        lgs.fit(train_vec,train_y)
        return lgs
-   
-   # Random Forest
+    
+   # Decision Tree
    from sklearn import tree
    def dt_train(train_vec,train_y):
        dt = tree.DecisionTreeClassifier()
        dt.fit(train_vec,train_y)
        return dt
    
-   # Decision Tree
+   # Linear SVM
    from sklearn.svm import LinearSVC
    def svm_train(train_vec,train_y):
        svm = LinearSVC(C=1)
        svm.fit(train_vec,train_y)
        return svm
    
-   # Linear SVM
+   # Random Forest
    from sklearn.ensemble import RandomForestClassifier
    def rf_train(train_vec,train_y):
        rf = RandomForestClassifier(200)
