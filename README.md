@@ -125,10 +125,10 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
               while True:
                   l = f.readline()
                   print(l)
-
+      
                   if not l:
                       break
-
+      
                   if l != "\n":
                       para +=l
                   else:
@@ -177,7 +177,7 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
                               if l[i + j].startswith("Content-Length: "):
                                   break
                           train.append(line[0] + line[1] + "?" + l[i + j + 2])
-
+      
           return train
       ```
 
@@ -222,7 +222,7 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
                               if l[i + j].startswith("Content-Length:"):
                                   break
                           train.append(line[0] + line[1] + "?" + l[i + j + 2])
-
+      
           return train
       ```
 
@@ -251,21 +251,21 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
        lgs = LogisticRegression(solver='lbfgs', max_iter=1000)
        lgs.fit(train_vec,train_y)
        return lgs
-
+   
    # Random Forest
    from sklearn import tree
    def dt_train(train_vec,train_y):
        dt = tree.DecisionTreeClassifier()
        dt.fit(train_vec,train_y)
        return dt
-
+   
    # Decision Tree
    from sklearn.svm import LinearSVC
    def svm_train(train_vec,train_y):
        svm = LinearSVC(C=1)
        svm.fit(train_vec,train_y)
        return svm
-
+   
    # Linear SVM
    from sklearn.ensemble import RandomForestClassifier
    def rf_train(train_vec,train_y):
@@ -281,6 +281,12 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
    | Accuracy | 0.9760910505199377   | 0.964873495455662  | 0.9662654548431999 | 0.9945959223777 |
    | F1 score | 0.9706473663047849   | 0.9582644226092032 | 0.9597262952101663 | 0.9933827956769 |
 
+   위 알고리즘들의 threshold에 대한 ROC 그래프는 다음과 같았다.
+
+   ![](https://user-images.githubusercontent.com/28581806/140687402-ca370471-b93d-4552-b8ee-3f109f443744.png)
+   
+   
+   
    // **TODO** : Linear SVM이 가장 높은 이유 설명
    ** 회의 필요 **
 
