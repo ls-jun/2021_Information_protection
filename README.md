@@ -125,10 +125,10 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
               while True:
                   l = f.readline()
                   print(l)
-      
+
                   if not l:
                       break
-      
+
                   if l != "\n":
                       para +=l
                   else:
@@ -177,7 +177,7 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
                               if l[i + j].startswith("Content-Length: "):
                                   break
                           train.append(line[0] + line[1] + "?" + l[i + j + 2])
-      
+
           return train
       ```
 
@@ -222,7 +222,7 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
                               if l[i + j].startswith("Content-Length:"):
                                   break
                           train.append(line[0] + line[1] + "?" + l[i + j + 2])
-      
+
           return train
       ```
 
@@ -240,70 +240,64 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
 
 <br/>
 
-2. 여러 알고리즘 학습 모델 사용
+2.  여러 알고리즘 학습 모델 사용
 
-   다음은 위에서 설명한 네 가지 모델을 코드로 구현한 모습이다.
+    다음은 위에서 설명한 네 가지 모델을 코드로 구현한 모습이다.
 
-   ```python
-   # Logistic Regresstion
-   from sklearn.linear_model import LogisticRegression
-   def lgs_train(train_vec,train_y):
-       lgs = LogisticRegression(solver='lbfgs', max_iter=1000)
-       lgs.fit(train_vec,train_y)
-       return lgs
-   
-   # Decision Tree
-   from sklearn import tree
-   def dt_train(train_vec,train_y):
-       dt = tree.DecisionTreeClassifier()
-       dt.fit(train_vec,train_y)
-       return dt
-   
-   # Linear SVM
-   from sklearn.svm import LinearSVC
-   def svm_train(train_vec,train_y):
-       svm = LinearSVC(C=1)
-       svm.fit(train_vec,train_y)
-       return svm
-   
-   # Random Forest
-   from sklearn.ensemble import RandomForestClassifier
-   def rf_train(train_vec,train_y):
-       rf = RandomForestClassifier(200)
-       rf.fit(train_vec,train_y)
-       return rf
-   ```
+    ```python
+    # Logistic Regresstion
+    from sklearn.linear_model import LogisticRegression
+    def lgs_train(train_vec,train_y):
+        lgs = LogisticRegression(solver='lbfgs', max_iter=1000)
+        lgs.fit(train_vec,train_y)
+        return lgs
 
-   결과는 다음과 같았다.
+    # Decision Tree
+    from sklearn import tree
+    def dt_train(train_vec,train_y):
+        dt = tree.DecisionTreeClassifier()
+        dt.fit(train_vec,train_y)
+        return dt
 
-   |          | Logistic Regresstion | Random Forest      | Decision Tree      | Linear SVM      |
-   | -------- | -------------------- | ------------------ | ------------------ | --------------- |
-   | Accuracy | 0.9760910505199377   | 0.964873495455662  | 0.9662654548431999 | 0.9945959223777 |
-   | F1 score | 0.9706473663047849   | 0.9582644226092032 | 0.9597262952101663 | 0.9933827956769 |
+    # Linear SVM
+    from sklearn.svm import LinearSVC
+    def svm_train(train_vec,train_y):
+        svm = LinearSVC(C=1)
+        svm.fit(train_vec,train_y)
+        return svm
 
-   위 알고리즘들의 threshold에 대한 ROC(Receiver Operating Characteristic: 분류 모델 성능 그래프) 는 다음과 같았다.
+    # Random Forest
+    from sklearn.ensemble import RandomForestClassifier
+    def rf_train(train_vec,train_y):
+        rf = RandomForestClassifier(200)
+        rf.fit(train_vec,train_y)
+        return rf
+    ```
 
-   ![](https://user-images.githubusercontent.com/28581806/140687402-ca370471-b93d-4552-b8ee-3f109f443744.png)
+    결과는 다음과 같았다.
 
-   SVM의 AUC(Area Under the Curve: ROC 곡선 아래의 영역)가 가장 크기 때문에 SVM 알고리즘을 통해 학습하는 방법이 가장 높은 정확도를 나타냈다. 이는 클래스 구별에 SVM의 성능이 훌륭하다는 것을 의미한다.
+    |          | Logistic Regresstion | Random Forest      | Decision Tree      | Linear SVM      |
+    | -------- | -------------------- | ------------------ | ------------------ | --------------- |
+    | Accuracy | 0.9760910505199377   | 0.964873495455662  | 0.9662654548431999 | 0.9945959223777 |
+    | F1 score | 0.9706473663047849   | 0.9582644226092032 | 0.9597262952101663 | 0.9933827956769 |
 
-   설명은 다음과 같다.
+    위 알고리즘들의 threshold에 대한 ROC(Receiver Operating Characteristic: 분류 모델 성능 그래프) 는 다음과 같았다.
 
-   ```
-   SVM은 고차원 또는 무한차원공간에서 초평면 또는 초평면 집합을 구축하는 역할을 하는데, 일반적으로 마진이 클수록 분류기의 일반화 오류가 낮아지므로 모든 클래스의 가장 가까운 훈련 데이터 포인트까지 가장 중요한 거리를 가진 초평면에 의해 우수한 분리가 달성, 그런 초평면을 찾아주는것이 SVM이기에 AUC가 가장 크게 나온다고 생각한다.
-   
-   어떤 데이터들의 평균값을 내릴 때 편차를 줄이기 위해서는 평균이 아닌 중앙값이 더 정확한 데이터가 될때도 있다. SVM 알고리즘은 학습한 데이터들의 기준점을 선정할 때 무수히 많은 기준점들 중 편차를 최대한으로 줄일 수 있는 방법 즉, 두 데이터가 기준점과 최대한 멀게 기준점을 잡는 것(마진을 크게하는 것)이다. 또한 편차가 심한 데이터가 있을 땐 데이터를 구분하는 기준에 큰 영향을 주지 않도록 중앙값을 이용하는 것 또한 일반화 오류를 낮출 수 있는 방법일 것이다. 또한 저차원에서 보기에 기준점을 잡기 어려운 경우 커널트릭을 이용하여 다차원으로 끌어올려준 후 기준점을 잡아주는 방법(초평면을 생성하는)을 이용하기 때문에 데이터들의 기준점을 보다 명확하게 잡게 된다.
-   ```
-   
-   
-   
-   모델에 따른 AUC 결과는 다음과 같다.
-   
-   | 모델명                 | AUC      |
-   | ---------------------- | -------- |
-   | LogisticRegression     | 0.974117 |
-   | RandomForestClassifier | 0.967980 |
-   | DecisionTreeClassifier | 0.968537 |
-   | LinearSVC              | 0.993629 |
-   
-   
+    ![](https://user-images.githubusercontent.com/28581806/140687402-ca370471-b93d-4552-b8ee-3f109f443744.png)
+
+    SVM의 AUC(Area Under the Curve: ROC 곡선 아래의 영역)가 가장 크기 때문에 SVM 알고리즘을 통해 학습하는 방법이 가장 높은 정확도를 나타냈다. 이는 클래스 구별에 SVM의 성능이 훌륭하다는 것을 의미한다.
+
+    설명은 다음과 같다.
+
+         SVM은 고차원 또는 무한차원공간에서 초평면 또는 초평면 집합을 구축하는 역할을 하는데, 일반적으로 마진이 클수록 분류기의 일반화 오류가 낮아지므로 모든 클래스의 가장 가까운 훈련 데이터 포인트까지 가장 중요한 거리를 가진 초평면에 의해 우수한 분리가 달성, 그런 초평면을 찾아주는것이 SVM이기에 AUC가 가장 크게 나온다고 생각한다.
+
+         어떤 데이터들의 평균값을 내릴 때 편차를 줄이기 위해서는 평균이 아닌 중앙값이 더 정확한 데이터가 될때도 있다. SVM 알고리즘은 학습한 데이터들의 기준점을 선정할 때 무수히 많은 기준점들 중 편차를 최대한으로 줄일 수 있는 방법 즉, 두 데이터가 기준점과 최대한 멀게 기준점을 잡는 것(마진을 크게하는 것)이다. 또한 편차가 심한 데이터가 있을 땐 데이터를 구분하는 기준에 큰 영향을 주지 않도록 중앙값을 이용하는 것 또한 일반화 오류를 낮출 수 있는 방법일 것이다. 또한 저차원에서 보기에 기준점을 잡기 어려운 경우 커널트릭을 이용하여 다차원으로 끌어올려준 후 기준점을 잡아주는 방법(초평면을 생성하는)을 이용하기 때문에 데이터들의 기준점을 보다 명확하게 잡게 된다.
+
+    모델에 따른 AUC 결과는 다음과 같다.
+
+    | 모델명                 | AUC      |
+    | ---------------------- | -------- |
+    | LogisticRegression     | 0.974117 |
+    | RandomForestClassifier | 0.967980 |
+    | DecisionTreeClassifier | 0.968537 |
+    | LinearSVC              | 0.993629 |
