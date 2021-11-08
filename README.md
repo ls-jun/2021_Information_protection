@@ -50,8 +50,6 @@ github: https://github.com/shinkihyeon
     pip install <Package name>
     ```
 
----
-
 <br/>
 
 ### 실행 환경
@@ -62,8 +60,6 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
 ```
 
 위 두 환경에서는 정상적으로 작동하는 것으로 확인하였다.
-
----
 
 <br/>
 
@@ -92,8 +88,6 @@ python 3.9.7 (tags/v3.9.7:1016ef3, Aug 30 2021, 20:19:38) [MSC v.1929 64 bit (AM
    - `decesion Tree`
    - `Linear SVM`
    - `random Forest`
-
----
 
 <br/>
 
