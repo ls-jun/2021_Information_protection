@@ -28,6 +28,6 @@ github: https://github.com/shinkihyeon
 
 ## 프로젝트
 
-프로젝트 1: [웹공격탐지](https://github.com/LeeBumSeok/2021_Information_protection/tree/master/Project%201)
+프로젝트 1: [웹공격탐지](https://github.com/ls-jun/2021_Information_protection/tree/master/Project%201)
 
-프로젝트 2: [AI악성코드탐지](https://github.com/LeeBumSeok/2021_Information_protection/tree/master/Project%202)
+프로젝트 2: [AI악성코드탐지](https://github.com/ls-jun/2021_Information_protection/tree/master/Project%202)
